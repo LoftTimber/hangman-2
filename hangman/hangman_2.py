@@ -4,6 +4,7 @@
 
 import time
 import random
+import os
 
 def splash_screen():
     print("=======================")
@@ -39,22 +40,41 @@ def count_off():
     print("Start")
     time.sleep(1)
 
-
-def get_puzzle():
-    puzzle_list = ['whale', 'nuzzle', 'wyvern', 'stub', 'sly', 'clerk', 'char', 'blench', 'cheap', 'clamp', 'scurfy', 'drown'  ]
-    secure_random = random.SystemRandom()
-    random_puzzle = secure_random.choice(puzzle_list)
+    
+def choose_word_list():
+    print("================================")
+    print("Choose your category.")
+    file_names = os.listdir("data")
+    category_position = 0
+    for f in enumerate(file_names):
+        file = "data/" + file_names[category_position]
+        with open(file, 'r') as f:
+            lines = f.read().splitlines()
+        first_category = lines[0]
+        print(str(int(category_position) +1) + ") " + str(first_category))
+        category_position += 1               
+    choice = input("which one? ")
+    choice = int(choice)-1
+    file = "data/" + file_names[choice]
+    with open(file, 'r') as f:
+        lines = f.read().splitlines()
+    category = lines[0]
+    random_puzzle = random.choice(lines[1:])
+    print(category)
+    print(random_puzzle)
     return random_puzzle
+
+
 
 
 def get_solved(puzzle, correct_guesses):
     solved = ""
     
     for letter in puzzle:
-        
         if letter in correct_guesses:
             solved += letter
-            
+        elif letter.isalpha() == False:
+            solved += letter                                
         else:
             solved += "-"
             
@@ -138,11 +158,13 @@ def show_result(solved, puzzle):
 
 splash_screen()
 list_rules()
-count_off()
+
 
   
 def play():
-    puzzle = get_puzzle()
+    puzzle = choose_word_list()
+    count_off()
+    
     correct_guesses = ""
     missed_words = ""
     missed_letters = ""
