@@ -118,18 +118,28 @@ def get_guess(puzzle, correct_guesses, missed_letters, missed_words):
         return guess
         
     
-def display_board(solved, missed_letters, missed_words, strikes):
+def display_board(puzzle, solved, missed_letters, missed_words, strikes):
     count = 0
-    
+    letters_in_solved = 0
+    for letter in puzzle:
+        if letter.isalpha():
+            letters_in_solved += 1
     for s in solved:
         
         if s[:] =='-':
-            count += 1    
-    spaces = 120/len(solved)
+            count += 1
+    if solved == puzzle:
+        count = 0
+        letters_in_solved = 120
+        spaces = 0
     
-    print((int(spaces))*(len(solved)-int(count))*(" ") +"     @"+ (int(count))*(int(spaces))*(" ") +"   /### ")
-    print((int(spaces))*(len(solved)-int(count))*(" ") +"   ~/~"+ (int(count))*(int(spaces))*(" ") +"  /### ")
-    print((int(spaces))*(len(solved)-int(count))*(" ") +"   0  "+ (int(count))*(int(spaces))*(" ") +" / ")
+    spaces = 120/(int(letters_in_solved))
+    extra_spaces = 120-(120/(int(letters_in_solved)))
+    
+    print((int(spaces))*(int(letters_in_solved)-int(count))*(" ") +"     @"+ (int(extra_spaces) +((int(count))*(int(spaces))))*(" ") +"   /### ")
+    print((int(spaces))*(int(letters_in_solved)-int(count))*(" ") +"   ~/~"+ (int(extra_spaces) +((int(count))*(int(spaces))))*(" ") +"  /### ")
+    print((int(spaces))*(int(letters_in_solved)-int(count))*(" ") +"   0  "+ (int(extra_spaces) +((int(count))*(int(spaces))))*(" ") +" / ")
+    print(127*(" ") +"!")
     print("=========================================================================================================================finish========")
     print(20*(strikes)*(" ") +"       "+ 20*(6-strikes)*(" ") +"  /### ")
     print(20*(strikes)*(" ") +" `~,_/`"+ 20*(6-strikes)*(" ") +" /### ")
@@ -171,7 +181,7 @@ def play():
     solved = get_solved(puzzle, correct_guesses)
     strikes = 0
     limit = 6
-    display_board(solved, missed_letters, missed_words, strikes)
+    display_board(puzzle, solved, missed_letters, missed_words, strikes)
     print(solved)
     
     while solved != puzzle and strikes!=6:
@@ -195,7 +205,7 @@ def play():
         
         else:
             strikes += 1                
-        display_board(solved, missed_letters, missed_words, strikes)
+        display_board(puzzle, solved, missed_letters, missed_words, strikes)
     show_result(solved, puzzle)
 
 
