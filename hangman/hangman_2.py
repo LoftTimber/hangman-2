@@ -7,22 +7,9 @@ import random
 import os
 
 def splash_screen():
-    print("=======================")
-    print("~~Welcome to FootRace~~")
-    print("=======================")
-    print("           .==,_")
-    print("         .===,_`\        ,,,,, ")
-    print("       .====,_ ` \      .====,\__")
-    print(" ---     .==-,`~. \           \ OO__,")
-    print("  ---      `~~=-.  \           /__-/")
-    print("    ---       `~~=. \         /")
-    print("                 `~. \       /")
-    print("                   ~. \____./")
-    print("                     `.=====)")
-    print("                  ___.--~~~--.__")
-    print("        ___\.--~~~              ~~~---.._|/")
-    print("        ~~~*  ""                           " "/")
-
+    splash_screen = open('splash_screen.txt', 'r')
+    picture = splash_screen.read()
+    print(picture)
 
 def list_rules():
     print("This game is played the same way as Hangman. (try to get all the letters and try not to get six strikes)")
@@ -61,7 +48,7 @@ def choose_word_list():
     category = lines[0]
     random_puzzle = random.choice(lines[1:])
     print(category)
-    print(random_puzzle)
+    
     return random_puzzle
 
 
@@ -83,7 +70,25 @@ def get_solved(puzzle, correct_guesses):
 def get_guess(puzzle, correct_guesses, missed_letters, missed_words):    
     guess = input("Guess a letter:")
     
-    if guess.isalpha():
+    
+    while len(guess)>1:
+        guessing_word = input("Is "+(guess)+" your answer:")
+        
+        if guessing_word == 'y':
+            
+            if guess == puzzle:
+                return guess
+            
+            else:
+                print("Nope, that is not the word.")
+                return guess
+        if guessing_word == 'n':
+            print("#########################")
+            print("Only give one letter.")
+            print("#########################")
+            guess = ""
+            return guess
+    if guess.isalpha():    
         
         if guess in correct_guesses or guess in missed_letters:
             print("#################################")
@@ -91,31 +96,17 @@ def get_guess(puzzle, correct_guesses, missed_letters, missed_words):
             print("#################################")
             guess = ""
             
-        while len(guess)>1:
-            guessing_word = input("Is "+(guess)+" your answer:")
+        
             
-            if guessing_word == 'y':
-                
-                if guess == puzzle:
-                    return guess
-                
-                else:
-                    print("Nope, that is not the word.")
-                return guess
-            
-            if guessing_word == 'n':
-                print("#########################")
-                print("Only give one letter.")
-                print("#########################")
-                guess = ""        
-        return guess
+                   
+        
     
     else:
         print("######################")
         print("Only give letters.")
         print("######################")
         guess = ""
-        return guess
+    return guess
         
     
 def display_board(puzzle, solved, missed_letters, missed_words, strikes):
@@ -134,12 +125,11 @@ def display_board(puzzle, solved, missed_letters, missed_words, strikes):
         spaces = 0
     
     spaces = 120/(int(letters_in_solved))
-    extra_spaces = 120-(120/(int(letters_in_solved)))
+    extra_spaces = (120-((int(count))*(int(spaces))))-((int(spaces))*(int(letters_in_solved)-int(count)))
     
     print((int(spaces))*(int(letters_in_solved)-int(count))*(" ") +"     @"+ (int(extra_spaces) +((int(count))*(int(spaces))))*(" ") +"   /### ")
     print((int(spaces))*(int(letters_in_solved)-int(count))*(" ") +"   ~/~"+ (int(extra_spaces) +((int(count))*(int(spaces))))*(" ") +"  /### ")
     print((int(spaces))*(int(letters_in_solved)-int(count))*(" ") +"   0  "+ (int(extra_spaces) +((int(count))*(int(spaces))))*(" ") +" / ")
-    print(127*(" ") +"!")
     print("=========================================================================================================================finish========")
     print(20*(strikes)*(" ") +"       "+ 20*(6-strikes)*(" ") +"  /### ")
     print(20*(strikes)*(" ") +" `~,_/`"+ 20*(6-strikes)*(" ") +" /### ")
@@ -190,17 +180,17 @@ def play():
         if len(letter)>1:
             word = letter
             
-        if letter not in puzzle and len(letter)==1:
+        if (letter.upper() not in puzzle and letter.lower() not in puzzle) and len(letter)==1:
             missed_letters += letter + " "
             
         elif letter != puzzle and len(letter)>1:
             missed_words += letter + " "
             
         else:
-            correct_guesses +=letter        
+            correct_guesses +=letter.lower() +letter.upper()       
         solved = get_solved(puzzle, correct_guesses)
         
-        if letter == "" or (len(letter)==1 and letter in puzzle) or (len(letter)>1 and letter == puzzle):
+        if letter == "" or (len(letter)==1 and (letter.upper() in puzzle or letter.lower() in puzzle)) or (len(letter)>1 and letter == puzzle):
             pass
         
         else:
@@ -225,12 +215,10 @@ def play_again():
 
             
 def show_credits():
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-    print("Thank you for playing.")
-    print("This game was made by Shane F.!")
-    print("12/3/2017")
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-
+    show_credits = open('show_credits.txt', 'r')
+    show = show_credits.read()
+    print(show)
+    
     
 playing=True
             

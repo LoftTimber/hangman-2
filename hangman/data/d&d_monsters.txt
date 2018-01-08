@@ -5,16 +5,16 @@ Lich
 Gelatinous cube
 Displacer beast
 Mimic
-Rust monster
 Bulette
-Tarasque
+Tarrasque
 giant
 Slaad
 Orcs
-Ghost
 Dragon
 Bugbear
 Goblin
+Grick
 Imp
-Werewolf
-Ghoul
+Roc
+Mind Flayer
+Shadow

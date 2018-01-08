@@ -1,9 +1,13 @@
 Mario Enemies
-Goomba
-Koopa Troopa
-Hammer Bro.
 Bowser
-Boo
+Goomba
+Koopa Para-Troopa
+Bullet Bill
+Buzzy Beetle
+Blooper
+Hammer Bro
+Cheep Cheep
+Koopa Troopa
+Spiny
+Lava Bubble
 Lakitu
-Koopalings
-Bowser Jr.
