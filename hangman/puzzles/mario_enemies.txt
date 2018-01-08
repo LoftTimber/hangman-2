@@ -1,0 +1,13 @@
+Mario Enemies
+Bowser
+Goomba
+Koopa Para-Troopa
+Bullet Bill
+Buzzy Beetle
+Blooper
+Hammer Bro
+Cheep Cheep
+Koopa Troopa
+Spiny
+Lava Bubble
+Lakitu
